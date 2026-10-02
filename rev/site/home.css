@@ -20,6 +20,7 @@
   --accent-text: #2459c2;
   --accent-soft: rgb(45 108 224 / 10%);
   --accent-glow: rgb(45 108 224 / 16%);
+  --accent-border: rgb(45 108 224 / 35%);
   --on-accent: #ffffff;
   --success: #2a7330;
   --focus-ring: rgb(45 108 224 / 55%);
@@ -61,6 +62,7 @@
     --accent-text: #7eaaf5;
     --accent-soft: rgb(59 123 234 / 18%);
     --accent-glow: rgb(59 123 234 / 20%);
+    --accent-border: rgb(126 170 245 / 40%);
     --success: #6cc06f;
     --focus-ring: rgb(126 170 245 / 70%);
     --frame-border: rgb(255 255 255 / 10%);
@@ -370,6 +372,38 @@ strong {
   font-size: 0.875rem;
 }
 
+/* Sharing, said right under the lede: nothing to sign up for. */
+.hero-share {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 40rem;
+  margin-top: 24px;
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  border: 1px solid var(--accent-border);
+  box-shadow: var(--shadow-sm);
+  color: var(--fg-muted);
+  font-size: 0.9875rem;
+  line-height: 1.55;
+  text-align: left;
+  text-wrap: pretty;
+}
+
+.hero-share strong {
+  color: var(--fg);
+}
+
+.hero-share-icon {
+  flex: none;
+  margin-top: 1px;
+  fill: none;
+  stroke: var(--accent-text);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
 .window-hero {
   margin-top: 64px;
 }
@@ -478,6 +512,54 @@ strong {
   font-size: 1.125rem;
 }
 
+/* A feature's sentence on the left and how it works, in three short lines, on the right. */
+.feature-wide .feature-text-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px 56px;
+  align-items: end;
+  max-width: none;
+}
+
+.facts li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--fg-muted);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.facts li + li {
+  margin-top: 8px;
+}
+
+.facts li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.85;
+}
+
+.facts b {
+  color: var(--fg);
+}
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.8125em;
+  padding: 0.05em 0.4em;
+  border-radius: 5px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  box-shadow: inset 0 -1px 0 var(--border-strong);
+  color: var(--fg);
+}
+
 /* Exec | Engineer: two radios and their labels switch the screenshot, no script. */
 
 .switch-input {
@@ -516,21 +598,22 @@ strong {
   color: var(--fg);
 }
 
-#zoom-engineer:checked ~ .segmented label[for="zoom-engineer"],
-#zoom-exec:checked ~ .segmented label[for="zoom-exec"] {
+/* The first radio shows .switch-a, the second .switch-b; each label is its radio's. */
+.switch-input:nth-of-type(1):checked ~ .segmented label:nth-child(1),
+.switch-input:nth-of-type(2):checked ~ .segmented label:nth-child(2) {
   background: var(--bg-elevated);
   color: var(--fg);
   box-shadow: var(--shadow-sm);
 }
 
-#zoom-engineer:focus-visible ~ .segmented label[for="zoom-engineer"],
-#zoom-exec:focus-visible ~ .segmented label[for="zoom-exec"] {
+.switch-input:nth-of-type(1):focus-visible ~ .segmented label:nth-child(1),
+.switch-input:nth-of-type(2):focus-visible ~ .segmented label:nth-child(2) {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-#zoom-engineer:checked ~ .switch-exec,
-#zoom-exec:checked ~ .switch-engineer {
+.switch-input:nth-of-type(1):checked ~ .switch-b,
+.switch-input:nth-of-type(2):checked ~ .switch-a {
   display: none;
 }
 
@@ -733,71 +816,327 @@ strong {
   box-shadow: var(--shadow-sm);
 }
 
-/* The share drawing. */
-
-.share-art {
-  width: 100%;
-  max-width: 320px;
-  height: auto;
-  overflow: visible;
-  font-family: var(--font-ui);
+/* The repository's refs: the walkthroughs beside its branches. */
+.mock-refs {
+  max-width: 330px;
 }
 
-.art-line {
-  stroke: var(--border-strong);
+.mock-refs code {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fg-muted);
+  font-size: 0.75rem;
 }
 
-.art-arrow {
-  stroke: var(--fg-subtle);
+.mock-refs p:not(.mock-heading) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-inline: -6px;
+  padding: 2px 6px;
+  border-radius: 6px;
 }
 
-.art-accent {
-  fill: var(--accent);
+.mock-refs .ref-on {
+  background: var(--accent-soft);
 }
 
-.art-on-accent {
-  fill: var(--on-accent);
-  font-size: 18px;
-  font-weight: 650;
-}
-
-.art-soft {
-  fill: var(--bg-elevated);
-  stroke: var(--border-strong);
-  stroke-width: 1;
-}
-
-.art-on-soft {
-  fill: var(--fg-muted);
-  font-size: 13px;
+.mock-refs .ref-on code {
+  color: var(--accent-text);
   font-weight: 600;
 }
 
-.art-doc {
-  fill: var(--bg-elevated);
-  stroke: var(--border-strong);
-  stroke-width: 1;
+.ref-tag {
+  flex: none;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--accent-border);
+  color: var(--accent-text);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.6;
 }
 
-.art-doc-title {
-  fill: var(--fg);
-  font-size: 12px;
+.card > p strong {
+  color: var(--fg);
+}
+
+/* Sharing: what a walkthrough goes through to reach the team, and what it never needs. */
+
+.section-share {
+  background:
+    radial-gradient(70% 60% at 50% 0%, var(--accent-glow), transparent 70%),
+    var(--bg);
+  border-block: 1px solid var(--border);
+}
+
+.section-head-center {
+  max-width: 48rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-lede {
+  margin-top: 20px;
+  color: var(--fg-muted);
+  font-size: clamp(1.0625rem, 0.98rem + 0.35vw, 1.1875rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.flow-figure {
+  margin-bottom: 64px;
+}
+
+.flow {
+  --flow-gap: 48px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--flow-gap);
+}
+
+.flow-node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 22px 14px 20px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+/* The arrow from the node before: a line across the gap, its head at this node. */
+.flow-node + .flow-node::before {
+  content: "";
+  position: absolute;
+  top: 44px;
+  left: calc(6px - var(--flow-gap));
+  width: calc(var(--flow-gap) - 14px);
+  height: 1.5px;
+  background: var(--fg-subtle);
+  opacity: 0.6;
+}
+
+.flow-node + .flow-node::after {
+  content: "";
+  position: absolute;
+  top: 40.5px;
+  left: -13px;
+  width: 8px;
+  height: 8px;
+  border-top: 1.5px solid var(--fg-subtle);
+  border-right: 1.5px solid var(--fg-subtle);
+  transform: rotate(45deg);
+  opacity: 0.8;
+}
+
+.flow-node-key {
+  border-color: var(--accent);
+  background:
+    linear-gradient(var(--accent-soft), var(--accent-soft)),
+    var(--bg-elevated);
+  box-shadow: 0 0 0 1px var(--accent), var(--shadow-md);
+}
+
+/* "git push", on the edge of the node it arrives at. */
+.flow-verb {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1px 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.7;
+  white-space: nowrap;
+}
+
+.flow-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.flow-icon svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.flow-node-key .flow-icon {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.flow-people {
+  display: flex;
+  height: 44px;
+  margin-bottom: 6px;
+  align-items: center;
+}
+
+.flow-people span {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-sunken);
+  border: 2px solid var(--bg-elevated);
+  color: var(--fg-muted);
+  font-size: 0.8125rem;
   font-weight: 650;
 }
 
-.art-chip {
-  fill: var(--accent-soft);
+.flow-people span + span {
+  margin-left: -9px;
 }
 
-.art-chip-text {
-  fill: var(--accent-text);
-  font-size: 8.5px;
+/* The first face on top of the stack. */
+.flow-people span:nth-child(1) {
+  z-index: 3;
+}
+
+.flow-people span:nth-child(2) {
+  z-index: 2;
+}
+
+.flow-people span {
+  position: relative;
+}
+
+.flow-people span:first-child {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.flow-title {
+  color: var(--fg);
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.flow-detail {
+  color: var(--fg-muted);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.flow-ref {
+  background: var(--bg-elevated);
+  border-color: var(--accent-border);
+  color: var(--accent-text);
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
-.art-caption {
-  fill: var(--fg-subtle);
-  font-size: 11px;
+@media (max-width: 1100px) {
+  .flow {
+    --flow-gap: 32px;
+  }
+
+  .flow-node {
+    padding-inline: 10px;
+  }
+}
+
+.share-lists {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 52rem;
+  margin-inline: auto;
+}
+
+.share-list {
+  padding: 24px 28px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+}
+
+.share-list h3 {
+  font-size: 1.0625rem;
+  font-weight: 650;
+}
+
+.share-list ul {
+  margin-top: 14px;
+}
+
+.share-list li {
+  position: relative;
+  padding-left: 28px;
+  color: var(--fg-muted);
+  line-height: 1.55;
+}
+
+.share-list li + li {
+  margin-top: 10px;
+}
+
+/* A check mark, drawn, as in Requirements. */
+.checks li::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 0.3em;
+  width: 6px;
+  height: 11px;
+  border: solid var(--success);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* The same "none of these" sign as the login card's, in a list. */
+.nots-list {
+  display: block;
+}
+
+.nots-list li {
+  display: block;
+  padding: 0 0 0 28px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  font-size: 1rem;
+}
+
+.nots-list li::before {
+  position: absolute;
+  left: 1px;
+  top: 0.32em;
+  width: 14px;
+  height: 14px;
+}
+
+.share-note {
+  max-width: 52rem;
+  margin: 24px auto 0;
+  color: var(--fg-subtle);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  text-align: center;
+  text-wrap: pretty;
 }
 
 /* How it works */
@@ -1047,6 +1386,75 @@ strong {
 /* Narrower screens */
 
 @media (max-width: 960px) {
+  .feature-wide .feature-text-split {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 38rem;
+  }
+
+  /* The flow, top to bottom: each node a row, its icon on the line. */
+  .flow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    max-width: 30rem;
+    margin-inline: auto;
+  }
+
+  .flow-node {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    column-gap: 14px;
+    row-gap: 2px;
+    align-items: start;
+    justify-items: start;
+    padding: 16px 18px;
+    text-align: left;
+  }
+
+  .flow-node > .flow-icon,
+  .flow-node > .flow-people {
+    grid-row: 1 / span 3;
+    margin-bottom: 0;
+  }
+
+  .flow-node > :not(.flow-icon, .flow-people, .flow-verb) {
+    grid-column: 2;
+  }
+
+  .flow-node + .flow-node::before {
+    top: -25px;
+    left: 40px;
+    width: 1.5px;
+    height: 20px;
+  }
+
+  .flow-node + .flow-node::after {
+    top: -12px;
+    left: 36.5px;
+    transform: rotate(135deg);
+  }
+
+  .flow-verb {
+    left: auto;
+    right: 18px;
+    transform: none;
+  }
+
+  .flow-people span {
+    width: 20px;
+    height: 20px;
+    border-width: 1.5px;
+    font-size: 0.625rem;
+  }
+
+  .flow-people span + span {
+    margin-left: -8px;
+  }
+
+  .share-lists {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 30rem;
+  }
+
   .steps {
     grid-template-columns: minmax(0, 1fr);
     max-width: 34rem;
