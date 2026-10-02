@@ -3,39 +3,311 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'" />
     <meta name="referrer" content="no-referrer" />
-    <title>rev</title>
+    <meta name="color-scheme" content="light dark" />
+    <title>rev: review the change, not the diff</title>
+    <meta name="description" content="rev turns a GitHub pull request into a guided review: a walkthrough, written by your own coding agent, that tells the change as a story and shows only the code that matters." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="rev: review the change, not the diff" />
+    <meta property="og:description" content="A guided review of every GitHub pull request, written by your own coding agent: the change as a story, and only the code that matters." />
+    <meta property="og:url" content="https://redocly-contrib.github.io/rev/" />
+    <meta property="og:image" content="https://redocly-contrib.github.io/rev/site/shots/overview-light.png" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" href="./icon.png" />
-    <style>
-      body {
-        font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        max-width: 640px;
-        margin: 64px auto;
-        padding: 0 24px;
-        color: #1f2328;
-      }
-      h1 {
-        margin: 16px 0 8px;
-      }
-      @media (prefers-color-scheme: dark) {
-        body {
-          background: #1f1f1f;
-          color: #cccccc;
-        }
-        a {
-          color: #4daafc;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="./site/home.css" />
   </head>
   <body>
-    <img src="./icon.png" width="96" height="96" alt="" />
-    <h1>rev</h1>
-    <p>Guided pull request review for Redocly: a walkthrough of each pull request, written by your own Claude Code, Codex or Cursor and shared in the pull request.</p>
-    <p>
-      <a id="download" href="https://github.com/redocly-contrib/rev/releases/latest">Download the latest release</a> for macOS on Apple Silicon. The repository is
-      private: sign in to GitHub with an account that has access to it first.
-    </p>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="topbar">
+      <nav class="wrap topbar-inner" aria-label="Site">
+        <a class="brand" href="./" aria-label="rev, home">
+          <img src="./icon.png" width="28" height="28" alt="" />
+          <span>rev</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#install">Install</a></li>
+        </ul>
+        <a class="button button-small" href="https://github.com/redocly-contrib/rev/releases/latest">Download</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="wrap hero-text">
+          <img class="hero-icon" src="./icon.png" width="88" height="88" alt="" />
+          <p class="eyebrow">rev for macOS</p>
+          <h1 id="hero-title">Review the change,<br /> not the diff.</h1>
+          <p class="lede">rev turns a GitHub pull request into a guided review: a walkthrough, written by your own coding agent, that tells the change as a story and shows only the code that matters.</p>
+          <div class="cta">
+            <a class="button button-primary" id="download" href="https://github.com/redocly-contrib/rev/releases/latest">
+              <svg class="button-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              Download for Mac <span class="button-detail">(Apple Silicon)</span>
+            </a>
+            <a class="button button-secondary" href="#how">How it works</a>
+          </div>
+          <p class="fineprint">The repository is private: sign in to GitHub with an account that has access to redocly-contrib/rev to download.</p>
+        </div>
+        <div class="wrap wrap-wide">
+          <figure class="window window-hero">
+            <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+            <picture>
+              <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="./site/shots/overview-dark.webp 2x" />
+              <source type="image/webp" srcset="./site/shots/overview-light.webp 2x" />
+              <img src="./site/shots/overview-light.png" width="1100" height="666" fetchpriority="high" alt="rev's Overview of the pull request “Rate limit requests per token”: the walkthrough's summary and its story in four steps, with an outline of the steps, their notes and files on the left." />
+            </picture>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section" id="features" aria-labelledby="features-title">
+        <div class="wrap">
+          <header class="section-head">
+            <p class="eyebrow">Features</p>
+            <h2 id="features-title">Read the story. Judge the code that matters.</h2>
+          </header>
+
+          <article class="feature feature-wide" aria-labelledby="f-story">
+            <div class="feature-text">
+              <h3 id="f-story">Only the important code, as a story</h3>
+              <p>Every walkthrough comes as an exec summary, to decide in a minute, and an engineer walkthrough, to review the code that matters step by step. Everything else is folded away.</p>
+            </div>
+            <div class="switcher">
+              <input class="switch-input" type="radio" name="zoom" id="zoom-engineer" checked />
+              <input class="switch-input" type="radio" name="zoom" id="zoom-exec" />
+              <div class="segmented">
+                <label for="zoom-engineer">Engineer walkthrough</label>
+                <label for="zoom-exec">Exec summary</label>
+              </div>
+              <figure class="window switch-engineer">
+                <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+                <picture>
+                  <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="./site/shots/engineer-dark.webp 2x" />
+                  <source type="image/webp" srcset="./site/shots/engineer-light.webp 2x" />
+                  <img src="./site/shots/engineer-light.png" width="1100" height="666" loading="lazy" decoding="async" alt="Step 2 of 4 of the engineer walkthrough, “Answer 429 with Retry-After”: two plain sentences, then the new middleware's code with a Key note and a Note pinned to its lines." />
+                </picture>
+              </figure>
+              <figure class="window switch-exec">
+                <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+                <picture>
+                  <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="./site/shots/exec-dark.webp 2x" />
+                  <source type="image/webp" srcset="./site/shots/exec-light.webp 2x" />
+                  <img src="./site/shots/exec-light.png" width="1100" height="666" loading="lazy" decoding="async" alt="The exec summary of the same pull request: the story in three steps, then the first step with what changes, before and after, in one sentence." />
+                </picture>
+              </figure>
+            </div>
+          </article>
+
+          <article class="feature feature-wide" aria-labelledby="f-code">
+            <div class="feature-text">
+              <h3 id="f-code">A simple code view, built in</h3>
+              <p>When the story is not enough, open the whole file or Cmd-click a name to go to its definition, without leaving the review.</p>
+            </div>
+            <figure class="window">
+              <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+              <picture>
+                <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="./site/shots/code-dark.webp 2x" />
+                <source type="image/webp" srcset="./site/shots/code-light.webp 2x" />
+                <img src="./site/shots/code-light.png" width="1100" height="666" loading="lazy" decoding="async" alt="Code mode: the repository's files with the changed ones marked, a whole file, and the signature and documentation of a function shown on hover." />
+              </picture>
+            </figure>
+          </article>
+
+          <div class="feature-grid">
+            <article class="feature card" aria-labelledby="f-open">
+              <div class="card-art" role="img" aria-label="rev's block in a pull request description, with its Open in rev link, and the rev command in a terminal">
+                <div class="mock mock-block">
+                  <p class="mock-heading">rev</p>
+                  <p><b>Risk: Low</b> · Size: spans 6 areas</p>
+                  <p><span class="mock-link mock-strong">Open in rev</span> · <span class="mock-link">install rev</span></p>
+                </div>
+                <div class="mock mock-term">
+                  <p><span class="mock-prompt">$</span> rev open 482</p>
+                  <p><span class="mock-prompt">$</span> rev</p>
+                </div>
+              </div>
+              <h3 id="f-open">Open straight from GitHub</h3>
+              <p>Click “Open in rev” in the pull request's description, or run <code>rev</code> in your terminal.</p>
+            </article>
+
+            <article class="feature card" aria-labelledby="f-share">
+              <div class="card-art" role="img" aria-label="One person generates the walkthrough; it travels with the pull request to everyone who reviews it">
+                <svg class="share-art" viewBox="0 0 320 132" width="320" height="132" aria-hidden="true">
+                  <g class="art-line" fill="none" stroke-width="1.5" stroke-linecap="round">
+                    <path d="M70 66h52" />
+                    <path d="M206 66c20 0 28-36 50-36" />
+                    <path d="M206 66h50" />
+                    <path d="M206 66c20 0 28 36 50 36" />
+                  </g>
+                  <g class="art-arrow" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M116 61l6 5-6 5" />
+                  </g>
+                  <circle class="art-accent" cx="44" cy="66" r="24" />
+                  <text class="art-on-accent" x="44" y="71" text-anchor="middle">M</text>
+                  <text class="art-caption" x="44" y="118" text-anchor="middle">generates</text>
+                  <rect class="art-doc" x="126" y="38" width="80" height="56" rx="8" />
+                  <text class="art-doc-title" x="166" y="61" text-anchor="middle">PR #482</text>
+                  <rect class="art-chip" x="138" y="70" width="56" height="14" rx="7" />
+                  <text class="art-chip-text" x="166" y="80.5" text-anchor="middle">walkthrough</text>
+                  <circle class="art-soft" cx="276" cy="30" r="17" />
+                  <text class="art-on-soft" x="276" y="34.5" text-anchor="middle">J</text>
+                  <circle class="art-soft" cx="276" cy="66" r="17" />
+                  <text class="art-on-soft" x="276" y="70.5" text-anchor="middle">P</text>
+                  <circle class="art-soft" cx="276" cy="102" r="17" />
+                  <text class="art-on-soft" x="276" y="106.5" text-anchor="middle">S</text>
+                  <text class="art-caption" x="166" y="118" text-anchor="middle">one walkthrough</text>
+                </svg>
+              </div>
+              <h3 id="f-share">Share with your team</h3>
+              <p>One person generates the walkthrough and shares it in the pull request. Everyone else just opens it and reads.</p>
+            </article>
+
+            <article class="feature card" aria-labelledby="f-login">
+              <div class="card-art" role="img" aria-label="rev's status line, signed in to GitHub through gh, and no account, tokens or servers of its own">
+                <div class="mock mock-status">
+                  <p><span class="dot" aria-hidden="true"></span>Signed in to GitHub as alice</p>
+                </div>
+                <ul class="nots">
+                  <li>No account</li>
+                  <li>No tokens</li>
+                  <li>No servers</li>
+                </ul>
+              </div>
+              <h3 id="f-login">Your GitHub login, nothing else</h3>
+              <p>rev works through <code>gh</code>, the GitHub CLI you are already signed in to. No accounts, no tokens, no servers.</p>
+            </article>
+
+            <article class="feature card" aria-labelledby="f-agent">
+              <div class="card-art" role="img" aria-label="A choice of Claude Code, Codex or Cursor, with the model and the effort">
+                <div class="mock mock-agents">
+                  <p class="agent agent-on"><span class="radio" aria-hidden="true"></span>Claude Code</p>
+                  <p class="agent"><span class="radio" aria-hidden="true"></span>Codex</p>
+                  <p class="agent"><span class="radio" aria-hidden="true"></span>Cursor</p>
+                </div>
+                <div class="mock mock-effort">
+                  <span>Low</span><span>Medium</span><span class="on">High</span><span>Max</span>
+                </div>
+              </div>
+              <h3 id="f-agent">Your agent</h3>
+              <p>Claude Code, Codex or Cursor writes the walkthrough on your Mac: your subscription, your model.</p>
+            </article>
+          </div>
+
+          <article class="feature feature-wide" aria-labelledby="f-local">
+            <div class="feature-text">
+              <h3 id="f-local">Review your own changes before you push</h3>
+              <p>Open a folder or a branch to walk through your own work. Leave notes for AI on the lines that need another pass, then Copy for AI and paste them into your agent.</p>
+            </div>
+            <figure class="window">
+              <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+              <picture>
+                <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="./site/shots/local-dark.webp 2x" />
+                <source type="image/webp" srcset="./site/shots/local-light.webp 2x" />
+                <img src="./site/shots/local-light.png" width="1100" height="666" loading="lazy" decoding="async" alt="A local review of a branch: the new code with two Notes for AI under it, and the notice “Copied 2 notes” after Copy for AI." />
+              </picture>
+            </figure>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section-soft" id="how" aria-labelledby="how-title">
+        <div class="wrap">
+          <header class="section-head">
+            <p class="eyebrow">How it works</p>
+            <h2 id="how-title">From pull request to review in three steps</h2>
+          </header>
+          <ol class="steps">
+            <li class="step">
+              <figure class="step-shot">
+                <picture>
+                  <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="./site/shots/open-dark.webp 2x" />
+                  <source type="image/webp" srcset="./site/shots/open-light.webp 2x" />
+                  <img src="./site/shots/open-light.png" width="480" height="360" loading="lazy" decoding="async" alt="rev's first screen: a field for a pull request link, Open a folder, and the recent pull requests." />
+                </picture>
+              </figure>
+              <h3><span class="step-number" aria-hidden="true">1</span>Open a pull request</h3>
+              <p>From its “Open in rev” link, by pasting its link, or with <code>rev open</code>.</p>
+            </li>
+            <li class="step">
+              <figure class="step-shot">
+                <picture>
+                  <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="./site/shots/generate-dark.webp 2x" />
+                  <source type="image/webp" srcset="./site/shots/generate-light.webp 2x" />
+                  <img src="./site/shots/generate-light.png" width="480" height="360" loading="lazy" decoding="async" alt="The New walkthrough dialog: Claude Code, Codex or Cursor, the model and the effort, and Share with the team when done." />
+                </picture>
+              </figure>
+              <h3><span class="step-number" aria-hidden="true">2</span>Generate with your agent</h3>
+              <p>Your agent reads the change and writes both walkthroughs. Share them, and nobody else has to wait.</p>
+            </li>
+            <li class="step">
+              <figure class="step-shot">
+                <picture>
+                  <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="./site/shots/read-dark.webp 2x" />
+                  <source type="image/webp" srcset="./site/shots/read-light.webp 2x" />
+                  <img src="./site/shots/read-light.png" width="480" height="360" loading="lazy" decoding="async" alt="A step of the walkthrough: its title, two short paragraphs, and a What changes card with the behaviour before and after." />
+                </picture>
+              </figure>
+              <h3><span class="step-number" aria-hidden="true">3</span>Read the story and review</h3>
+              <p>Step through the story, comment on the lines, and submit your review to GitHub.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" id="install" aria-labelledby="install-title">
+        <div class="wrap install">
+          <div class="install-main">
+            <p class="eyebrow">Install</p>
+            <h2 id="install-title">Up and running in a minute</h2>
+            <ol class="install-steps">
+              <li>
+                <h3>Download the latest release</h3>
+                <p>The disk image for Macs with Apple Silicon. Sign in to GitHub with an account that has access to redocly-contrib/rev first, as the repository is private.</p>
+              </li>
+              <li>
+                <h3>Drag rev to Applications</h3>
+                <p>Open the disk image and drag rev into the Applications folder.</p>
+              </li>
+              <li>
+                <h3>Open it the first time</h3>
+                <p>The build is not notarized yet, so macOS asks once. Right-click rev in Applications and choose Open; on macOS 15 and newer, click Open Anyway in System Settings › Privacy &amp; Security.</p>
+              </li>
+              <li>
+                <h3>Add the <code>rev</code> command</h3>
+                <p>The command line tool comes with the app: choose rev › Install Command Line Tool.</p>
+              </li>
+            </ol>
+            <div class="cta cta-left">
+              <a class="button button-primary" href="https://github.com/redocly-contrib/rev/releases/latest">
+                <svg class="button-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                Download for Mac <span class="button-detail">(Apple Silicon)</span>
+              </a>
+            </div>
+          </div>
+          <aside class="requirements" aria-labelledby="req-title">
+            <h3 id="req-title">Requirements</h3>
+            <ul>
+              <li><b>macOS on Apple Silicon</b></li>
+              <li><b>The GitHub CLI, signed in</b><br /><code>brew install gh</code>, then <code>gh auth login</code></li>
+              <li><b>git 2.43 or newer</b></li>
+              <li><b>One coding agent</b><br />Claude Code, Codex or Cursor's agent CLI</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer-inner">
+        <p class="footer-brand"><img src="./icon.png" width="20" height="20" alt="" /> rev, made at Redocly</p>
+        <ul class="footer-links">
+          <li><a href="https://github.com/redocly-contrib/rev">Repository</a></li>
+          <li><a href="https://github.com/redocly-contrib/rev/releases/latest">Releases</a></li>
+        </ul>
+      </div>
+    </footer>
   </body>
 </html>
