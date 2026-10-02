@@ -493,6 +493,9 @@ strong {
 }
 
 .feature-wide + .feature-wide,
+.feature-wide + .feature-side,
+.feature-side + .feature-side,
+.feature-side + .feature-wide,
 .feature-wide + .feature-grid,
 .feature-grid + .feature-wide {
   margin-top: 112px;
@@ -503,13 +506,48 @@ strong {
   margin-bottom: 32px;
 }
 
-.feature-wide .feature-text h3 {
+.feature-wide .feature-text h3,
+.feature-side .feature-text h3 {
   font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
   letter-spacing: -0.025em;
 }
 
-.feature-wide .feature-text p {
+.feature-wide .feature-text p,
+.feature-side .feature-text p {
   font-size: 1.125rem;
+}
+
+/* A feature beside a part of the window: the words on one side, the screenshot on the other, sides taking turns. */
+.feature-side {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 56px;
+  align-items: center;
+}
+
+.feature-side-flip {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+}
+
+.feature-side-flip .shot {
+  order: -1;
+}
+
+.feature-side .facts {
+  margin-top: 20px;
+}
+
+/* Part of the window, not all of it: no title bar, the same quiet frame. */
+.shot {
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--frame-border);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-window);
+}
+
+.shot img {
+  width: 100%;
 }
 
 /* A feature's sentence on the left and how it works, in three short lines, on the right. */
@@ -617,7 +655,7 @@ kbd {
   display: none;
 }
 
-/* The four smaller features. */
+/* The smaller features. */
 
 .feature-grid {
   display: grid;
@@ -864,6 +902,81 @@ kbd {
   color: var(--fg);
 }
 
+/* The last card, across the grid: its drawing beside its words. */
+.card-wide {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+}
+
+.card-wide .card-art {
+  margin-bottom: 0;
+}
+
+.card-text p {
+  margin-top: 10px;
+  color: var(--fg-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* Home's checkouts as rev recycles them: the kept ones, and the ones it removed, struck through. */
+.mock-checkouts {
+  max-width: 340px;
+}
+
+.mock-checkouts ul {
+  margin-top: 6px;
+}
+
+.mock-checkouts li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 3px 0;
+  color: var(--fg);
+}
+
+.mock-checkouts li + li {
+  border-top: 1px solid var(--border);
+}
+
+.mock-checkouts li > span {
+  white-space: nowrap;
+}
+
+.mock-checkouts .co-gone > span:first-child {
+  color: var(--fg-subtle);
+  text-decoration: line-through;
+}
+
+.co-tag {
+  flex: none;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--bg-sunken);
+  color: var(--fg-muted);
+  font-size: 0.6875rem;
+  line-height: 1.6;
+}
+
+.co-keep {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.co-line {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  text-align: right;
+}
+
 /* Sharing: what a walkthrough goes through to reach the team, and what it never needs. */
 
 .section-share {
@@ -885,6 +998,15 @@ kbd {
   font-size: clamp(1.0625rem, 0.98rem + 0.35vw, 1.1875rem);
   line-height: 1.6;
   text-wrap: pretty;
+}
+
+.section-lede-small {
+  margin-top: 12px;
+  font-size: 1rem;
+}
+
+.section-lede b {
+  color: var(--fg);
 }
 
 .flow-figure {
@@ -1391,6 +1513,26 @@ kbd {
     max-width: 38rem;
   }
 
+  /* The words, then the screenshot. */
+  .feature-side,
+  .feature-side-flip {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .feature-side .feature-text {
+    max-width: 38rem;
+  }
+
+  .feature-side-flip .shot {
+    order: 0;
+  }
+
+  .card-wide {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
   /* The flow, top to bottom: each node a row, its icon on the line. */
   .flow {
     grid-template-columns: minmax(0, 1fr);
@@ -1481,9 +1623,16 @@ kbd {
   }
 
   .feature-wide + .feature-wide,
+  .feature-wide + .feature-side,
+  .feature-side + .feature-side,
+  .feature-side + .feature-wide,
   .feature-wide + .feature-grid,
   .feature-grid + .feature-wide {
     margin-top: 80px;
+  }
+
+  .shot {
+    border-radius: 9px;
   }
 
   .window-hero {
@@ -1555,6 +1704,11 @@ kbd {
   .mock-agents {
     gap: 4px;
     padding: 6px;
+  }
+
+  .mock-checkouts {
+    padding-inline: 12px;
+    font-size: 0.75rem;
   }
 
   .agent {
