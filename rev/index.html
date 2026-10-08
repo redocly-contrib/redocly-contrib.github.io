@@ -201,17 +201,45 @@
             </figure>
           </article>
 
-          <article class="feature feature-wide" aria-labelledby="f-code">
+          <article class="feature feature-side feature-side-flip" aria-labelledby="f-keeps-up">
             <div class="feature-text">
-              <h3 id="f-code">A simple code view, built in</h3>
-              <p>When the story is not enough, open the whole file or Cmd-click a name to go to its definition, without leaving the review.</p>
+              <h3 id="f-keeps-up">Keeps up with the pull request</h3>
+              <p>While you review, rev notices new commits on the pull request, when you come back to the window and every two minutes while it is in front, and edits in a folder moments after you save. A banner offers <b>Reload</b>, which keeps your place, and, with a walkthrough open, <b>Update the walkthrough</b>, which reads only what changed.</p>
+              <ul class="facts">
+                <li>Reload goes back to the same step and hunk, with your notes and the comment you were writing.</li>
+                <li>Update the walkthrough moves its steps onto the new diff, and your agent reads only the new and changed code.</li>
+                <li>Offline or signed out, the checks stay quiet.</li>
+              </ul>
+            </div>
+            <figure class="shot">
+              <picture>
+                <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="./site/shots/changes-dark.webp 2x" />
+                <source type="image/webp" srcset="./site/shots/changes-light.webp 2x" />
+                <img src="./site/shots/changes-light.png" width="640" height="300" loading="lazy" decoding="async" alt="The top of the review of acme/gateway#482 in a narrower window, a banner under its top bar: “2 new commits since you opened this.”, with Reload and Update the walkthrough on its right; under it, the steps on the left and the walkthrough's Overview." />
+              </picture>
+            </figure>
+          </article>
+
+          <article class="feature feature-wide" aria-labelledby="f-code">
+            <div class="feature-text feature-text-split">
+              <div>
+                <h3 id="f-code">A simple code view, built in</h3>
+                <p>When the story is not enough, open the whole file or ⌘-click a name to go to its definition, without leaving the review. In Code mode, <kbd>⌘K</kbd> is Go to file: “rlimit” finds <code>src/middleware/rate-limit.ts</code>, and with nothing typed the changed files come first.</p>
+              </div>
+              <figure class="shot shot-palette">
+                <picture>
+                  <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="./site/shots/palette-dark.webp 2x" />
+                  <source type="image/webp" srcset="./site/shots/palette-light.webp 2x" />
+                  <img src="./site/shots/palette-light.png" width="560" height="230" loading="lazy" decoding="async" alt="Go to file in Code mode, over the dimmed code: “rlimit” typed, and three changed files found, rate-limits.md in docs, rate-limit.test.ts in test and rate-limit.ts in src/middleware, the typed letters in bold, each with its lines added and removed." />
+                </picture>
+              </figure>
             </div>
             <figure class="window">
               <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span></div>
               <picture>
                 <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="./site/shots/code-dark.webp 2x" />
                 <source type="image/webp" srcset="./site/shots/code-light.webp 2x" />
-                <img src="./site/shots/code-light.png" width="1120" height="700" loading="lazy" decoding="async" alt="Code mode: the repository's files with the changed ones marked, the whole of src/server.ts, and the signature and documentation of rateLimit.check shown on hover." />
+                <img src="./site/shots/code-light.png" width="1120" height="700" loading="lazy" decoding="async" alt="Code mode: the repository's files with the changed ones marked and the tree's filters above them, the whole of src/server.ts, and the signature and documentation of rateLimit.check shown on hover." />
               </picture>
             </figure>
           </article>
@@ -230,7 +258,7 @@
                 </div>
               </div>
               <h3 id="f-open">Open straight from GitHub</h3>
-              <p>Click “Open in rev” in the pull request's description, or run <code>rev</code> in your terminal.</p>
+              <p>Click “Open in rev” in the pull request's description, or run <code>rev</code> in your terminal, which starts the app if it is closed.</p>
             </article>
 
             <article class="feature card card-share" aria-labelledby="f-share">
@@ -274,7 +302,31 @@
                 </div>
               </div>
               <h3 id="f-agent">Your agent</h3>
-              <p>Claude Code, Codex or Cursor writes the walkthrough on your Mac: your subscription, your model.</p>
+              <p>Claude Code, Codex or Cursor writes the walkthrough on your Mac: your subscription, your model. When its CLI is too old for rev, or signed out, rev says so in one line, with the command to run.</p>
+            </article>
+
+            <article class="feature card card-wide card-wide-flip" aria-labelledby="f-fast">
+              <div class="card-art" role="img" aria-label="rev's status bar with two walkthroughs generating at once, and its list of them: acme/gateway #482 for 2 minutes 14 seconds, its engineer walkthrough written and its exec being written; acme/web #1310 for 38 seconds, its engineer walkthrough reading the change and its exec waiting for it.">
+                <div class="mock mock-runs">
+                  <ul>
+                    <li>
+                      <p class="run-head"><span class="spin" aria-hidden="true"></span><span class="run-name">acme/gateway #482 — Rate limit the API per token</span><span class="run-time">2:14</span></p>
+                      <p class="run-zoom"><b>Exec</b> Writing the exec walkthrough…</p>
+                      <p class="run-zoom"><b>Engineer</b> Written</p>
+                    </li>
+                    <li>
+                      <p class="run-head"><span class="spin" aria-hidden="true"></span><span class="run-name">acme/web #1310 — Move billing settings into the account page</span><span class="run-time">0:38</span></p>
+                      <p class="run-zoom"><b>Exec</b> Waiting for engineer</p>
+                      <p class="run-zoom"><b>Engineer</b> Reading diff/files/012.patch</p>
+                    </li>
+                  </ul>
+                  <p class="run-bar"><span class="spin" aria-hidden="true"></span><b>Generating 2 walkthroughs</b></p>
+                </div>
+              </div>
+              <div class="card-text">
+                <h3 id="f-fast">Fast to open, quick to write</h3>
+                <p>A pull request opens in a second or two when your clone already has its commits: there is nothing to fetch. One run of your agent writes both walkthroughs, reading the change once. With Sonnet, the model rev recommends for Claude Code, a 41-file pull request took under three minutes and well under a dollar in one of our runs. Several pull requests can generate at once; the status bar lists them by name.</p>
+              </div>
             </article>
 
             <article class="feature card card-wide" aria-labelledby="f-checkouts">
@@ -301,7 +353,7 @@
           <article class="feature feature-wide" aria-labelledby="f-local">
             <div class="feature-text">
               <h3 id="f-local">Review your own changes before you push</h3>
-              <p>Open a folder to walk through your own work: its uncommitted changes, the last commit, everything since main, or one commit, with the changed files as a tree. Leave notes for AI on the lines that need another pass, then Copy for AI and paste them into your agent.</p>
+              <p>Open a folder to walk through your own work: its uncommitted changes, the last commit, everything since main, or one commit. Generate a walkthrough, or review the changes right away, the changed files as a tree. Leave notes for AI on the lines that need another pass, then Copy for AI and paste them into your agent.</p>
             </div>
             <figure class="window">
               <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -400,13 +452,13 @@
             <li class="step">
               <figure class="step-shot">
                 <picture>
-                  <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="./site/shots/generate-dark.webp 2x" />
-                  <source type="image/webp" srcset="./site/shots/generate-light.webp 2x" />
-                  <img src="./site/shots/generate-light.png" width="480" height="360" loading="lazy" decoding="async" alt="The New walkthrough dialog: Claude Code, Codex or Cursor, the model, and Share with the team when done, which pushes a git ref and adds the walkthrough to the PR description." />
+                  <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="./site/shots/chooser-dark.webp 2x" />
+                  <source type="image/webp" srcset="./site/shots/chooser-light.webp 2x" />
+                  <img src="./site/shots/chooser-light.png" width="480" height="360" loading="lazy" decoding="async" alt="The pull request in rev, before any walkthrough: its title, its medium risk and why, and two equal choices side by side, Generate walkthrough (your agent writes a guided story, a few minutes) and Review the changes (the changed files as a tree, right away)." />
                 </picture>
               </figure>
-              <h3><span class="step-number" aria-hidden="true">2</span>Generate with your agent</h3>
-              <p>Your agent reads the change and writes both walkthroughs. Share them, then or later, and rev pushes a git ref and links it from the pull request: nobody else has to wait.</p>
+              <h3><span class="step-number" aria-hidden="true">2</span>Generate, or review right away</h3>
+              <p>Your agent reads the change once and writes both walkthroughs. Share them, then or later: nobody else has to wait. Or choose Review the changes and start at once.</p>
             </li>
             <li class="step">
               <figure class="step-shot">

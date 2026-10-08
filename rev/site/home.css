@@ -977,6 +977,104 @@ kbd {
   text-align: right;
 }
 
+/* The second card across the grid: its words first, its drawing on the right. */
+.card-wide-flip .card-art {
+  order: 1;
+}
+
+/* Two runs at once, listed above the status bar: each PR by name, its two zooms, its time. */
+.mock-runs {
+  max-width: 380px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.mock-runs li {
+  padding: 10px 14px;
+}
+
+.mock-runs li + li {
+  border-top: 1px solid var(--border);
+}
+
+.mock-runs p + p {
+  margin-top: 2px;
+}
+
+.run-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg);
+}
+
+.run-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.run-time {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-muted);
+}
+
+.run-zoom {
+  padding-left: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.75rem;
+}
+
+.run-zoom b {
+  display: inline-block;
+  min-width: 4.75em;
+  font-weight: 600;
+}
+
+.run-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+
+/* A run going on: an arc, as the app's spinner. */
+.spin {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent-border);
+  border-top-color: var(--accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .spin {
+    animation: spin 1.1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Go to file, beside the code view's words. */
+.shot-palette {
+  width: 100%;
+  max-width: 560px;
+  justify-self: end;
+}
+
 /* Sharing: what a walkthrough goes through to reach the team, and what it never needs. */
 
 .section-share {
@@ -1531,6 +1629,14 @@ kbd {
   .card-wide {
     grid-template-columns: minmax(0, 1fr);
     gap: 24px;
+  }
+
+  .card-wide-flip .card-art {
+    order: 0;
+  }
+
+  .shot-palette {
+    justify-self: start;
   }
 
   /* The flow, top to bottom: each node a row, its icon on the line. */
